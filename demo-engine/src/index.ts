@@ -65,7 +65,28 @@ class OrderBook{
     }
 
 
-    matchBuyOrder(order:Order){
+    matchBuyOrder(buyOrder:Order):void{
+        while(buyOrder.quantity>0 && this.sellOrders.length>0){
+            const bestSell = this.sellOrders[0];
+
+            if(buyOrder.price >= bestSell.price){
+                const tradeQuantity = Math.min(buyOrder.quantity, bestSell.quantity) ;
+                const tradePrice = bestSell.price ;
+
+                this.createTrade(buyOrder.id, bestSell.id, tradePrice, tradeQuantity)
+
+                buyOrder.quantity -= tradeQuantity ;
+                bestSell.quantity -= tradeQuantity ;
+
+                if (bestSell.quantity===0){
+                    this.sellOrders.shift()    // remove first element
+                }
+
+            }else{
+                break;
+            }
+
+        }
 
     }
 
@@ -73,7 +94,9 @@ class OrderBook{
 
     }
 
+private createTrade(buyOrderId:string, seLLOrderId: string, price: number, quantity:number){
 
+}
 
 
 
