@@ -95,7 +95,30 @@ class OrderBook{
 
     }
 
-    matchSellOrder(order:Order){
+   private matchSellOrder(sellOrder:Order):void{
+    while(sellOrder.quantity>0 && this.buyOrders.length>0){
+        const bestBuy= this.buyOrders[0];
+
+        if(sellOrder.price <= bestBuy.price){
+            const tradeQuantity= Math.min(sellOrder.quantity, bestBuy.quantity);
+            const tradePrice = bestBuy.price ;
+
+            this.createTrade(bestBuy.id, sellOrder.id,tradePrice, tradeQuantity)
+
+            bestBuy.quantity -= tradeQuantity ;
+            sellOrder.quantity -= tradeQuantity;
+
+            if(bestBuy.quantity === 0){
+                this.buyOrders.shift();
+            }
+        }else{
+            break;
+        }
+    }
+
+    if(sellOrder.quantity>0 && sellOrder.type=== OrderType.LIMIT){
+        this.insertSellOrder(sellOrder)
+    }
 
     }
 
@@ -108,7 +131,9 @@ private insertBuyOrder(order:Order){
 }
 
 
+private insertSellOrder(order:Order){
 
+}
 
 
 
