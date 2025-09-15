@@ -142,9 +142,21 @@ private insertBuyOrder(order:Order){
 }
 
 
-private insertSellOrder(order:Order){
-
-}
+  private insertSellOrder(order: Order): void {
+    let inserted = false;
+    for (let i = 0; i < this.sellOrders.length; i++) {
+      const existingOrder = this.sellOrders[i];
+      if (order.price < existingOrder.price || 
+          (order.price === existingOrder.price && order.timestamp < existingOrder.timestamp)) {
+        this.sellOrders.splice(i, 0, order);
+        inserted = true;
+        break;
+      }
+    }
+    if (!inserted) {
+      this.sellOrders.push(order);
+    }
+  }
 
 
 
