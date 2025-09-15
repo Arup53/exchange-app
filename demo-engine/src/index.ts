@@ -127,7 +127,18 @@ private createTrade(buyOrderId:string, seLLOrderId: string, price: number, quant
 }
 
 private insertBuyOrder(order:Order){
-
+    let inserted = false ;
+    for (let i=0; i< this.buyOrders.length; i++){
+        const existingOrder= this.buyOrders[i];
+        if(order.price>existingOrder.price || (order.price===existingOrder.price && order.timestamp< existingOrder.timestamp)){
+            this.buyOrders.splice(i,0,order);
+            inserted=true;
+            break;
+        }
+    }
+    if(!inserted){
+        this.buyOrders.push(order);
+    }
 }
 
 
