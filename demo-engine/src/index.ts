@@ -88,6 +88,11 @@ class OrderBook{
 
         }
 
+        // if no match or remaining left of particular order push to orderbook
+        if(buyOrder.quantity>0 && buyOrder.type=== OrderType.LIMIT){
+            this.insertBuyOrder(buyOrder);
+        }
+
     }
 
     matchSellOrder(order:Order){
@@ -98,7 +103,9 @@ private createTrade(buyOrderId:string, seLLOrderId: string, price: number, quant
 
 }
 
+private insertBuyOrder(order:Order){
 
+}
 
 
 
