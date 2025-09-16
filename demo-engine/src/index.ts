@@ -29,7 +29,7 @@ interface Trade {
 
 interface OrderBookLevel {
     price: number;
-    qunatity: number ;
+    quantity: number ;
     orderCount: number ;
 }
 
@@ -184,7 +184,7 @@ private insertSellOrder(order: Order): void {
                 }
             }
 
-            return Array.from(levelMap.entries()).map(([price, data])=>({price,qunatity:data.quantity,orderCount:data.orderCount})).slice(0,depth);
+            return Array.from(levelMap.entries()).map(([price, data])=>({price,quantity:data.quantity,orderCount:data.orderCount})).slice(0,depth);
         };
 
         return {
@@ -209,4 +209,27 @@ private insertSellOrder(order: Order): void {
     }
 
 
+
+    displayOrderBook():void {
+        console.log('\n----- ORDER BOOK');
+        const {bids,asks}= this.getOrderBookLevels();
+
+        console.log(`ASKS (Sell Orders):`);
+       asks.reverse().forEach(level => {
+      console.log(`  ${level.quantity.toFixed(2)} , ${level.price.toFixed(2)}, (${level.orderCount} orders)`);
+    });
+
+    const bid = this.getBestBid();
+    const ask = this.getBestAsk();
+    const spread= this.getSpread();
+    console.log(`-- Spread: ${spread?.toFixed(2) || 'N/A'} --`);
+
+    console.log('BIDS (Buy Orders):');
+    bids.forEach(level=>{
+        console.log(`  ${level.quantity.toFixed(2)} , ${level.price.toFixed(2)}, (${level.orderCount} orders)`);
+    })
+    console.log(`Best Bid: ${bid?.toFixed(2) || 'N/A'}, Best Ask: ${ask?.toFixed(2) || 'N/A'}`);
+    console.log('--------\n');
+
+    }
 }
