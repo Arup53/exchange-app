@@ -202,7 +202,11 @@ private insertSellOrder(order: Order): void {
         return this.sellOrders.length > 0? this.sellOrders[0].price : null;
     }
 
-
+    getSpread():number | null {
+        const bid= this.getBestBid();
+        const ask = this.getBestAsk();
+        return (bid !== null && ask !== null)? ask-bid :null ;
+    }
 
 
 }
