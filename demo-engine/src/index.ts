@@ -194,8 +194,12 @@ private insertSellOrder(order: Order): void {
     }
 
 
-    getBestBid(): number|null {
+    getBestBid(): number | null {
         return this.buyOrders.length>0? this.buyOrders[0].price: null ;
+    }
+
+    getBestAsk():number | null {
+        return this.sellOrders.length > 0? this.sellOrders[0].price : null;
     }
 
 
