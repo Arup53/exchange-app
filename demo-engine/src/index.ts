@@ -208,7 +208,9 @@ private insertSellOrder(order: Order): void {
         return (bid !== null && ask !== null)? ask-bid :null ;
     }
 
-
+  getRecentTrades(count: number = 10): Trade[] {
+    return this.trades.slice(-count);
+  }
 
     displayOrderBook():void {
         console.log('\n----- ORDER BOOK');
@@ -233,3 +235,4 @@ private insertSellOrder(order: Order): void {
 
     }
 }
+
