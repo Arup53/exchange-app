@@ -122,43 +122,52 @@ class OrderBook{
 
     }
 
-private createTrade(buyOrderId:string, seLLOrderId: string, price: number, quantity:number){
-
-}
-
-private insertBuyOrder(order:Order){
-    let inserted = false ;
-    for (let i=0; i< this.buyOrders.length; i++){
-        const existingOrder= this.buyOrders[i];
-        if(order.price>existingOrder.price || (order.price===existingOrder.price && order.timestamp< existingOrder.timestamp)){
-            this.buyOrders.splice(i,0,order);
-            inserted=true;
-            break;
+    
+    private insertBuyOrder(order:Order){
+        let inserted = false ;
+        for (let i=0; i< this.buyOrders.length; i++){
+            const existingOrder= this.buyOrders[i];
+            if(order.price>existingOrder.price || (order.price===existingOrder.price && order.timestamp< existingOrder.timestamp)){
+                this.buyOrders.splice(i,0,order);
+                inserted=true;
+                break;
+            }
         }
-    }
-    if(!inserted){
-        this.buyOrders.push(order);
-    }
+        if(!inserted){
+            this.buyOrders.push(order);
+        }
 }
 
 
-  private insertSellOrder(order: Order): void {
+private insertSellOrder(order: Order): void {
     let inserted = false;
     for (let i = 0; i < this.sellOrders.length; i++) {
-      const existingOrder = this.sellOrders[i];
-      if (order.price < existingOrder.price || 
-          (order.price === existingOrder.price && order.timestamp < existingOrder.timestamp)) {
-        this.sellOrders.splice(i, 0, order);
-        inserted = true;
-        break;
-      }
+        const existingOrder = this.sellOrders[i];
+        if (order.price < existingOrder.price || 
+            (order.price === existingOrder.price && order.timestamp < existingOrder.timestamp)) {
+                this.sellOrders.splice(i, 0, order);
+                inserted = true;
+                break;
+            }
+        }
+        if (!inserted) {
+            this.sellOrders.push(order);
+        }
     }
-    if (!inserted) {
-      this.sellOrders.push(order);
+    
+    
+    private createTrade(buyOrderId:string, sellOrderId: string, price: number, quantity:number){
+        const trade:Trade ={
+            buyOrderId,
+            sellOrderId,
+            price,
+            quantity,
+            timestamp:Date.now()
+        }
+
+        this.trades.push(trade);
+        console.log(`TRADE: ${quantity} @ ${price} (Buy: ${buyOrderId}, Sell: ${sellOrderId})`)
     }
-  }
-
-
 
 
 
