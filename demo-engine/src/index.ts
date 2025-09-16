@@ -236,3 +236,43 @@ private insertSellOrder(order: Order): void {
     }
 }
 
+
+function runOrderBookExample(): void {
+  console.log('Starting OrderBook Example\n');
+  
+  const orderBook = new OrderBook();
+
+  // Add some initial limit orders
+  console.log('--- Adding Initial Orders ---');
+  orderBook.addOrder(OrderSide.BUY, OrderType.LIMIT, 100.00, 10);
+  orderBook.addOrder(OrderSide.BUY, OrderType.LIMIT, 99.50, 15);
+  orderBook.addOrder(OrderSide.BUY, OrderType.LIMIT, 99.00, 20);
+  
+  orderBook.addOrder(OrderSide.SELL, OrderType.LIMIT, 101.00, 12);
+  orderBook.addOrder(OrderSide.SELL, OrderType.LIMIT, 101.50, 18);
+  orderBook.addOrder(OrderSide.SELL, OrderType.LIMIT, 102.00, 25);
+
+  orderBook.displayOrderBook();
+
+  // Add an order that will match
+  console.log('--- Adding Matching Order ---');
+  orderBook.addOrder(OrderSide.BUY, OrderType.LIMIT, 101.25, 20);
+  orderBook.displayOrderBook();
+
+  // Add a market order
+  console.log('--- Adding Market Order ---');
+  orderBook.addOrder(OrderSide.SELL, OrderType.MARKET, 0, 8);
+  orderBook.displayOrderBook();
+
+  // Show recent trades
+  console.log('--- Recent Trades ---');
+  const recentTrades = orderBook.getRecentTrades();
+  recentTrades.forEach(trade => {
+    console.log(`${trade.quantity} @ ${trade.price} (${new Date(trade.timestamp).toLocaleTimeString()})`);
+  });
+  
+  console.log('\nOrderBook example completed!');
+}
+
+
+runOrderBookExample();
