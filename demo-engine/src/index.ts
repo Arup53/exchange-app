@@ -170,7 +170,28 @@ private insertSellOrder(order: Order): void {
     }
 
 
+    getOrderBookLevels(depth:number=5):{bids:OrderBookLevel[], asks:OrderBookLevel[]}{
+        const aggregateLevels= (orders:Order[]): OrderBookLevel[]=>{
+            const levelMap= new Map<number, {quantity:number, orderCount:number}>();
 
+            for (const order of orders.slice(0, depth*3)){
+                if(levelMap.has(order.price)){
+                    const level= levelMap.get(order.price)!;
+                    level.quantity+=order.quantity ;
+                    level.orderCount +=1;
+                }else{
+                    levelMap.set(order.price, {quantity:order.quantity, orderCount:1});
+                }
+            }
+
+            return Array.from(levelMap.entries()).map(([price, data])=>({price,qunatity:data.quantity,orderCount:data.orderCount})).slice(0,depth);
+        };
+
+        return {
+            bids: aggregateLevels(this.buyOrders),
+            asks: aggregateLevels(this.sellOrders)
+        }
+    }
 
 
 
