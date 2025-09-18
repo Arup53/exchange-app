@@ -34,6 +34,10 @@ export class OrderBook{
         this.currentPrice = currentPrice || 0;
     }
 
+     ticker() {
+        return `${this.baseAsset}_${this.quoteAsset}`;
+    }
+
 
     addOrder(order:Order):{executedQty: number, fills: Fill[]}{
         if(order.side==="buy"){
