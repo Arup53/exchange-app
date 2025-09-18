@@ -35,6 +35,39 @@ export class OrderBook{
     }
 
 
+    addOrder(order:Order):{executedQty: number, fills: Fill[]}{
+        if(order.side==="buy"){
+            const {executedQty, fills}= this.mathBid(order);
+            order.filled=executedQty;
+            if(executedQty === order.quantity){
+                return {
+                    executedQty,
+                    fills
+                }
+            }
+            this.bids.push(order);
+            return {
+                executedQty,
+                fills
+            }
+        }else {
+            const {executedQty, fills} = this.matchAsk(order);
+            order.filled = executedQty;
+            if (executedQty === order.quantity) {
+                return {
+                    executedQty,
+                    fills
+                }
+            }
+            this.asks.push(order);
+            return {
+                executedQty,
+                fills
+            }
+        }
+    }
+
+
     mathBid(order:Order):{fills:Fill[], executedQty: number}{
         const fills:Fill[] = [];
         let executedQty= 0;
@@ -70,7 +103,7 @@ export class OrderBook{
     }
 
 
-    mathAsk(order:Order):{fills:Fill[], executedQty: number}{
+    matchAsk(order:Order):{fills:Fill[], executedQty: number}{
         const fills:Fill[] = [];
         let executedQty= 0;
 
