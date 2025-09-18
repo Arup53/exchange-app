@@ -38,6 +38,15 @@ export class OrderBook{
         return `${this.baseAsset}_${this.quoteAsset}`;
     }
 
+    getSnapshot() {
+        return {
+            baseAsset: this.baseAsset,
+            bids: this.bids,
+            asks: this.asks,
+            lastTradeId: this.lastTradeId,
+            currentPrice: this.currentPrice
+        }
+    }
 
     addOrder(order:Order):{executedQty: number, fills: Fill[]}{
         if(order.side==="buy"){
