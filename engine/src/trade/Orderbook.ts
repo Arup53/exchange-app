@@ -1,3 +1,5 @@
+import { BASE_CURRENCY } from "./Engine";
+
 export interface Order{
     price:number ;
     quantity: number;
@@ -15,7 +17,7 @@ export interface Fill{
     markerOrderId: string ;
 }
 
-export const BASE_CURRENCY="USD";
+
 
 
 export class OrderBook{
