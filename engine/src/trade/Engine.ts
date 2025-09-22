@@ -5,7 +5,7 @@ export const BASE_CURRENCY="USD";
 
 interface UserBalance {
     [key:string]:{
-        avaliable: number ;
+        available: number ;
         locked: number ;
     }
 }
@@ -57,21 +57,21 @@ export class Engine {
 
     checkAndLockFunds(baseAsset: string, quoteAsset: string, side:"buy"|"sell", userId: string, asset: string, price: string, quantity: string){
         if(side==="buy"){
-            if((this.balances.get(userId)?.[quoteAsset]?.avaliable || 0) < Number(quantity)*Number(price)){
+            if((this.balances.get(userId)?.[quoteAsset]?.available || 0) < Number(quantity)*Number(price)){
                 throw new Error("Insufficient funds");
             }
 
             // @ts-ignore
-            this.balances.get(userId)[quoteAsset].avaliable = this.balances.get(userId)?.[quoteAsset].avaliable - (Number(quantity)*Number(price));
+            this.balances.get(userId)[quoteAsset].available = this.balances.get(userId)?.[quoteAsset].available - (Number(quantity)*Number(price));
              //@ts-ignore
             this.balances.get(userId)[quoteAsset].locked = this.balances.get(userId)?.[quoteAsset].locked + (Number(quantity) * Number(price));
         } else {
-            if ((this.balances.get(userId)?.[baseAsset]?.avaliable || 0)< Number(quantity)){
+            if ((this.balances.get(userId)?.[baseAsset]?.available || 0)< Number(quantity)){
                 throw new Error("Insufficient funds");
             }
 
             // @ts-ignore
-            this.balances.get(userId)[baseAsset].avaliable= this.balances.get(userId)?.[baseAsset].avaliable -(Number(quantity));
+            this.balances.get(userId)[baseAsset].available= this.balances.get(userId)?.[baseAsset].available -(Number(quantity));
 
             // @ts-ignore
             this.balances.get(userId)[baseAsset].locked = this.balances.get(userId)?.[baseAsset].locked + Number(quantity);
@@ -238,14 +238,49 @@ export class Engine {
         if (!userBalance) {
             this.balances.set(userId, {
                 [BASE_CURRENCY]: {
-                    avaliable: amount,
+                    available: amount,
                     locked: 0
                 }
             });
         } else {
-            userBalance[BASE_CURRENCY].avaliable += amount;
+            userBalance[BASE_CURRENCY].available += amount;
         }
     }
 
+
+        setBaseBalances() {
+        this.balances.set("1", {
+            [BASE_CURRENCY]: {
+                available: 10000000,
+                locked: 0
+            },
+            "TESLA": {
+                available: 10000000,
+                locked: 0
+            }
+        });
+
+        this.balances.set("2", {
+            [BASE_CURRENCY]: {
+                available: 10000000,
+                locked: 0
+            },
+            "TESLA": {
+                available: 10000000,
+                locked: 0
+            }
+        });
+
+        this.balances.set("5", {
+            [BASE_CURRENCY]: {
+                available: 10000000,
+                locked: 0
+            },
+            "TESLA": {
+                available: 10000000,
+                locked: 0
+            }
+        });
+    }
 
 }
