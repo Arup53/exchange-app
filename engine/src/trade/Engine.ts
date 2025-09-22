@@ -18,7 +18,9 @@ export class Engine {
 
 
 
-
+    addOrderbook(orderbook: OrderBook) {
+        this.orderbooks.push(orderbook);
+    }
 
     createOrder(market: string, price:string, quantity: string, side:"buy"|"sell", userId: string){
         const orderbook = this.orderbooks.find(o=>o.ticker()=== market);
