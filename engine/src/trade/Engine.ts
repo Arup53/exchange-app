@@ -16,6 +16,44 @@ export class Engine {
     private balances: Map<string, UserBalance> = new Map();
 
 
+
+
+
+
+    createOrder(market: string, price:string, quantity: string, side:"buy"|"sell", userId: string){
+        const orderbook = this.orderbooks.find(o=>o.ticker()=== market);
+        const baseAsset= market.split("_")[0];
+        const quoteAsset= market.split("_")[1];
+
+        if(!orderbook){
+            throw new Error("No orderbook found");
+        }
+
+        this.checkAndLockFunds(baseAsset, quoteAsset, side, userId, quoteAsset, price, quantity);
+
+        const order: Order = {
+            price: Number(price),
+            quantity: Number(quantity),
+            orderId: Math.random().toString(36).substring(2,15)+ Math.random().toString(36).substring(2,15),
+            filled: 0,
+            side,
+            userId
+        }
+
+        const {fills, executedQty} = orderbook.addOrder(order);
+        
+        this.createDbTrades(fills, market, userId);
+        this.updateDbOrders(order, executedQty, fills, market);
+        this.publisWsDepthUpdates(fills, price, side, market);
+        this.publishWsTrades(fills, userId, market)
+        return {executedQty, fills, order:order.orderId}
+
+    }
+
+
+
+
+
     checkAndLockFunds(baseAsset: string, quoteAsset: string, side:"buy"|"sell", userId: string, asset: string, price: string, quantity: string){
         if(side==="buy"){
             if((this.balances.get(userId)?.[quoteAsset]?.avaliable || 0) < Number(quantity)*Number(price)){
