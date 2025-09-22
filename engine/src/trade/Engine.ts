@@ -42,7 +42,7 @@ export class Engine {
    
  createDbTrades(fills: Fill[], market: string, userId: string){ 
         fills.forEach(fill=>{
-            RedisManger.getInstance().pushMessage({
+            RedisManager.getInstance().pushMessage({
                 type: TRADE_ADDED,
                 data:{
                     market: market,
@@ -58,7 +58,29 @@ export class Engine {
 
     }
 
+    updateDbOrders( order: Order, executedQty: number, fills: Fill[], market: string){
+        RedisManager.getInstance().pushMessage({
+            type: ORDER_UPDATE,
+            data:{
+                orderId: order.orderId, 
+                executedQty: executedQty,
+                market: market,
+                price:order.price.toString(),
+                quantity: order.quantity.toString(),
+                side: order.side
+            }
+        })
 
+        fills.forEach(fill=>{
+            RedisManager.getInstance().pushMessage({
+                type: ORDER_UPDATE,
+                data: {
+                    orderId: fill.markerOrderId,
+                    executedQty: fill.qty
+                }
+            })
+        })
+    }
 
 
 }
