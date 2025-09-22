@@ -152,7 +152,7 @@ export class OrderBook{
 
     }
 
-    getDeph(){
+    getDepth(){
         const bids:[string, string][]= [];
         const asks:[string, string][]= [];
 
