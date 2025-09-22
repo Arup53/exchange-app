@@ -41,6 +41,7 @@ export class Engine {
         }
 
         const {fills, executedQty} = orderbook.addOrder(order);
+        this.updateBalance(userId, baseAsset, quoteAsset, side, fills, executedQty);
         
         this.createDbTrades(fills, market, userId);
         this.updateDbOrders(order, executedQty, fills, market);
