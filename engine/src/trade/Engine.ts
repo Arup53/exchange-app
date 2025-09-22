@@ -233,4 +233,19 @@ export class Engine {
     }
 
 
+      onRamp(userId: string, amount: number) {
+        const userBalance = this.balances.get(userId);
+        if (!userBalance) {
+            this.balances.set(userId, {
+                [BASE_CURRENCY]: {
+                    avaliable: amount,
+                    locked: 0
+                }
+            });
+        } else {
+            userBalance[BASE_CURRENCY].avaliable += amount;
+        }
+    }
+
+
 }
