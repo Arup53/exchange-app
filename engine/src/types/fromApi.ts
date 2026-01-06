@@ -1,16 +1,18 @@
-export const CREATE_ORDER= "CREATE_ORDER";
-export const CANCEL_ORDER= "CANCEL_ORDER";
-export const ON_RAMP= "ON_RAMP";
 
-export const GET_DEPTH= "GET_DEPTH";
-export const GET_OPEN_ORDERS= "GET_OPEN_ORDERS";
+export const CREATE_ORDER = "CREATE_ORDER";
+export const CANCEL_ORDER = "CANCEL_ORDER";
+export const ON_RAMP = "ON_RAMP";
+
+export const GET_DEPTH = "GET_DEPTH";
+export const GET_OPEN_ORDERS = "GET_OPEN_ORDERS";
 
 
-export type MessageFromApi ={
+//TODO: Can we share the types between the api and the engine?
+export type MessageFromApi = {
     type: typeof CREATE_ORDER,
-    data:{
-        market:string,
-        price :string,
+    data: {
+        market: string,
+        price: string,
         quantity: string,
         side: "buy" | "sell",
         userId: string
@@ -26,7 +28,7 @@ export type MessageFromApi ={
     data: {
         amount: string,
         userId: string,
-        txnId: string,
+        txnId: string
     }
 } | {
     type: typeof GET_DEPTH,
@@ -34,8 +36,8 @@ export type MessageFromApi ={
         market: string,
     }
 } | {
-    type : typeof GET_OPEN_ORDERS,
-    data:{
+    type: typeof GET_OPEN_ORDERS,
+    data: {
         userId: string,
         market: string,
     }
