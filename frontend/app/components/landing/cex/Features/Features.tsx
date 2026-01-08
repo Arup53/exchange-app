@@ -10,7 +10,7 @@ const Features = () => {
       <div className="w-1/2 mx-auto  grid grid-cols-2 gap-6 h-[1300px]">
         <div className="sticky top-[70px] w-[100px] h-[100px]">
           <h3 className="text-black text-[40px] font-bold w-[400px]">
-            Why choose aave
+            Why choose xCEX
           </h3>
           <p className="text-xl font-semibold text-gray-300 w-[400px]">
             Aave handles tens of billions of dollars across 12+ networks.

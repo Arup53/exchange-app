@@ -14,7 +14,7 @@ export default function Faq() {
 
   const faqs: FAQS[] = [
     {
-      question: "What is Aave?",
+      question: "What is xCEX?",
       answer:
         "Aave is a decentralized non-custodial liquidity protocol where users can participate as suppliers or borrowers. Suppliers provide liquidity to the market to earn a passive income, while borrowers are able to borrow in an overcollateralized or undercollateralized fashion.",
     },
@@ -24,12 +24,12 @@ export default function Faq() {
         "Your supplied tokens are stored in Aave's smart contracts. When you supply tokens, you receive aTokens in return which represent your deposit and automatically earn interest. These tokens remain in your wallet and you maintain full control over them.",
     },
     {
-      question: "Does Aave have risks?",
+      question: "Does xCEX have risks?",
       answer:
         "Yes, like all DeFi protocols, Aave has risks including smart contract risk, liquidation risk for borrowers, and market volatility. The protocol has been audited multiple times and has a Safety Module to help mitigate risks, but users should always do their own research and never invest more than they can afford to lose.",
     },
     {
-      question: "What is the Aave token?",
+      question: "What is the xCEX token?",
       answer:
         "AAVE is the native governance token of the Aave protocol. Token holders can vote on protocol upgrades and decisions. AAVE can also be staked in the Safety Module to provide security to the protocol and earn staking rewards.",
     },
